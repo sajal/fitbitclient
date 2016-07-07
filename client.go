@@ -11,7 +11,7 @@ import (
 
 //Minimal config for new client. Do not modify once initialized
 type Config struct {
-	CredFile     string   //File where the tokens will be permanently cashed in
+	CredFile     string   //File where the tokens will be permanently cached in
 	ClientID     string   //Fitbit client ID
 	ClientSecret string   //Fitbit client secret
 	Scopes       []string //Fitbit oauth scopes
@@ -65,6 +65,7 @@ func savetokenfile(fname string, tok *oauth2.Token) error {
 }
 
 //Create a http.Client which wraps a Transport which caches updated creds in cfg.CredFile
+//If cfg.CredFile does not exist(or is unreadable) interactive oauth authentication process will initiate.
 func NewFitBitClient(cfg *Config) (*http.Client, error) {
 	//Initialise FitbitAPI
 	conf := &oauth2.Config{
